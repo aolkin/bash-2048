@@ -17,6 +17,22 @@ draw () {
     done
 }
 
+insert_random () {
+    ((i=$RANDOM%$num_rows))
+    ((j=$RANDOM%$num_columns))
+    ((i=2))
+    while [ ${matrix[$i,$j]} -ne "0" ]; do
+	((i=$RANDOM%$num_rows))
+	((j=$RANDOM%$num_columns))
+    done
+    ((rand=$RANDOM%4))
+    if [ $rand -lt 3 ]; then
+	matrix[$i,$j]=2
+    else
+	matrix[$i,$j]=4
+    fi
+}
+
 move_up () {
     for ((j=0;j<num_columns;j++)) 
     do
@@ -109,7 +125,16 @@ for ((i=0;i<num_rows;i++))
 do
     for ((j=0;j<num_columns;j++)) 
     do
-        matrix[$i,$j]=2
+	((rand=$RANDOM%4))
+	if [ $rand -lt 2 ]; then    
+            matrix[$i,$j]=0
+	else
+	    if [ $rand -lt 3 ]; then
+		matrix[$i,$j]=2
+	    else
+		matrix[$i,$j]=4
+	    fi
+	fi
     done
 done
 
@@ -119,15 +144,19 @@ do
     read -n 1 arrow
     if [ $arrow = "w" ]; then
 	move_up
+	insert_random
     else 
 	if [ $arrow = "d" ]; then
 	     move_right
+	     insert_random
 	else
 	    if [ $arrow = "s" ]; then
 		move_down
+		insert_random		
 	    else
 		if [ $arrow = "a" ]; then
 		    move_left
+		    insert_random		   
 		fi
 	    fi
 	fi
