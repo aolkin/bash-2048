@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 declare -A matrix
 num_rows=4
 num_columns=4
