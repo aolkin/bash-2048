@@ -1,4 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+if [ -z "$BASH_VERSINFO" ]; then
+    echo "This game only supports the bash shell."
+    exit 1
+fi
+if [ "$BASH_VERSINFO" -lt 4 ]; then
+    echo "This game only supports bash v4 and newer."
+    exit 1
+fi
+
 declare -A matrix
 num_rows=4
 num_columns=4
